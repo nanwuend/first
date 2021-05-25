@@ -1,0 +1,23 @@
+//账号长度需要大于3，密码长度不能小于3；
+//确认操作
+void apply_account::clicked_ok()
+{
+   QSqlQuery sql;
+   QString s;
+   QString name=this->ui->lineEdit->text();
+   QString password=this->ui->lineEdit_2->text();
+   QString password2=this->ui->lineEdit_3->text();
+   s=QString("insert into user_table values('%1','%2')").arg(name).arg(password);
+   if(name.length()<3||password.length()<=3)
+      { QMessageBox::critical(this,"注册情况","登录账号大于3位，密码不小于3位！");
+       return;}
+   if(password!=password2)
+     { QMessageBox::critical(this,"提示","两次密码不同");return ;}
+   if(sql.exec(s))
+   {
+       QMessageBox::information(this,"注册情况","注册成功");
+       this->close();
+   }
+   else
+       QMessageBox::critical(this,"注册情况","注册失败");
+}
